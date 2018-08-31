@@ -40,8 +40,13 @@ end
 
 get '/' do 
 	guess = params["guess"]
+	if params["cheat"] && params["cheat"] == 'true'
+		display_secret = 'The secret number is ' + @@X.to_s
+	else
+		display_secret = ''
+	end
 	result = check_guess(guess)
 	message = result[0]
 	bgcolor = result[1]
-	erb :index, :locals => {:x => @@X, :message => message, :bgcolor => bgcolor}
+	erb :index, :locals => {:x => @@X, :message => message, :bgcolor => bgcolor, :secret => display_secret}
 end
